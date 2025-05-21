@@ -186,3 +186,6 @@ EMAIL_HOST_USER = 'mohamedelazab2017@gmail.com'
 EMAIL_HOST_PASSWORD = 'rzdzgikhsszdhojv'
 
 EMAIL_USE_SSL = False
+
+
+AUTHENTICATION_BACKENDS=['accounts.backend.Login_Username_Email']
