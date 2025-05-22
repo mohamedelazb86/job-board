@@ -3,6 +3,7 @@ from .forms import SignForm,ActivateForm
 from django.core.mail import send_mail
 from .models import Profile
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 
@@ -32,7 +33,9 @@ def signup(request):
             [email],
             fail_silently=False,
         )
-            return redirect(f'/accounts/activate_code/{username}')
+            # return redirect(f'/accounts/activate_code/{username}')
+            return redirect(reverse('accounts:activate-code', args=[username]))
+           
 
 
     else:
@@ -61,6 +64,7 @@ def activate_code(request,username):
                 profile.save()
 
                 return redirect('/accounts/login')
+                
 
     else:
         form=ActivateForm()

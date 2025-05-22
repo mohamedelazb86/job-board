@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from utils.genearte_code import generate_code
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.utils import timezone
+from django_countries.fields import CountryField
 
 ADDRESS_TYPE=[
     ('Home','Home'),
@@ -16,6 +18,8 @@ class Profile(models.Model):
     code=models.CharField(max_length=75,default=generate_code)
     phone=models.CharField(max_length=25)
     address=models.ForeignKey('Address',related_name='profile_address',on_delete=models.SET_NULL,null=True,blank=True)
+    join_at=models.DateTimeField(default=timezone.now)
+    country = CountryField()
 
 
     def __str__(self):

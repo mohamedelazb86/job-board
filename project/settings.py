@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # my package
     "django_bootstrap5",
+    'django_countries',
 ]
 
 MIDDLEWARE = [
@@ -189,3 +190,5 @@ EMAIL_USE_SSL = False
 
 
 AUTHENTICATION_BACKENDS=['accounts.backend.Login_Username_Email']
+
+LOGIN_REDIRECT_URL = '/'
