@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block body %}
+     <!-- bradcam_area  -->
+  <div class="bradcam_area bradcam_bg_1">
+      <div class="container">
+          <div class="row">
+              <div class="col-xl-12">
+                  <div class="bradcam_text">
+                      <h3>single blog</h3>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!--/ bradcam_area  -->
+
+   <!--================Blog Area =================-->
+   <section class="blog_area single-post-area section-padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-8 posts-list">
+               <div class="single-post">
+                  <div class="feature-img">
+                
+                {% if image %}
+                   <img class="img-fluid" src="{{post.image.url}}" alt=""> 
+                {% endif %}
+                    
+                     
+                  </div>
+                  <div class="blog_details">
+                     <h2>{{object.title}}
+                     </h2>
+                     <ul class="blog-info-link mt-3 mb-4">
+                        
+                        <li><a href="#"><i class="fa fa-comments"></i> {{reviews|length}} Comments</a></li>
+                     </ul>
+                     <p class="excert">
+                    {{post.content|truncatewords:50|safe}}
+                     </p>
+                    
+                  </div>
+               </div>
+           
+          
+               <div class="comments-area">
+                  <h4>{{reviews|length}} Comments</h4>
+
+            {% for object in reviews %}
+    
+
+                  <div class="comment-list">
+                     <div class="single-comment justify-content-between d-flex">
+                        <div class="user justify-content-between d-flex">
+                           <div class="thumb">
+                              <img src="img/comment/comment_1.png" alt="">
+                           </div>
+                           <div class="desc">
+                              <p class="comment">
+                                 {{object.review|truncatewords:25|safe}}
+                              </p>
+                              <div class="d-flex justify-content-between">
+                                 <div class="d-flex align-items-center">
+                                    <h5>
+                                       <a href="#">{{object.user}}</a>
+                                    </h5>
+                                    <p class="date">{{object.publish_date|date:'D - M - Y'}}</p>
+                                 </div>
+                              
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+            {% endfor %}
+                 
+               </div>
+               <div class="comment-form">
+                  <h4>Leave a Reply</h4>
+                  <form class="form-contact comment_form" action="#" id="commentForm" method="post">
+                    {% csrf_token %}
+                     {% bootstrap_form form %}
+
+
+                      <div class="col-md-12">
+                                    <div class="submit_btn">
+                                        <button class="boxed-btn3 w-100" type="submit">Send Message</button>
+                                    </div>
+                        </div>
+                    
+                  </form>
+               </div>
+            </div>
+          <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+                        <aside class="single_sidebar_widget search_widget">
+                            <form action="#">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder='Search Keyword'
+                                            onfocus="this.placeholder = ''"
+                                            onblur="this.placeholder = 'Search Keyword'">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="button"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                    type="submit">Search</button>
+                            </form>
+                        </aside>
+
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title">Category</h4>
+                            <ul class="list cat-list">
+                        
+                        {% for item in categories  %}
+                             
+                                <li>
+                                    <a href="#" class="d-flex">
+                                        <p>{{item.name}}</p>
+                                     
+                                    </a>
+                                </li>
+                        {% endfor %}
+                         
+                            </ul>
+                        </aside>
+
+                        <aside class="single_sidebar_widget popular_post_widget">
+                            <h3 class="widget_title">Recent Post</h3>
+                        
+                        {% for object in posts %}
+                            
+                        
+                            <div class="media post_item">
+                                
+                                {% if image %}
+                                   <img src="{{object.image.url}}" alt="post">  
+                                {% endif %}
+                                    
+                               
+                                <div class="media-body">
+                                    <a href="{% url 'blog:post-detail' object.slug %}">
+                                        <h3>{{object.title}}</h3>
+                                    </a>
+                                    <p>{{object.publish_date|date:'D-M-Y'}}</p>
+                                </div>
+                            </div>
+                        
+                         
+                        </aside>
+                        <aside class="single_sidebar_widget tag_cloud_widget">
+                            <h4 class="widget_title">Tag Clouds</h4>
+                            <ul class="list">
+                              {% for tag in object.tags.all %}
+      
+                                    <li>
+                                        <a href="#">{{ tag.name }}</a>
+                                    </li>
+                                {% endfor %}
+                           
+                            </ul>
+                        </aside>
+
+                          {% endfor %}
+
+
+                    </div>
+                </div>
+         </div>
+      </div>
+   </section>
+   <!--================ Blog Area end =================-->
+{% endblock body %}
+    

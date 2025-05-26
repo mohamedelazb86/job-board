@@ -42,8 +42,20 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my package
+
     "django_bootstrap5",
     'django_countries',
+    "taggit",
+    'django_summernote',
+    'django_filters',
+
+    # my apps
+    'blog',
+    'job',
+    'home',
+    'contact',
+
+
 ]
 
 MIDDLEWARE = [
@@ -69,6 +81,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'home.get_context_data.get_context_data',
             ],
         },
     },

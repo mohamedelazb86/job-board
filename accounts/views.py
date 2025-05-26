@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from .models import Profile
 from django.contrib.auth.models import User
 from django.urls import reverse
+from .forms import ProfileForm
 
 
 
@@ -70,3 +71,24 @@ def activate_code(request,username):
         form=ActivateForm()
 
     return render(request,'accounts/activate_code.html',{'form':form})
+
+def profile(request):
+    profile=Profile.objects.get(user=request.user)
+
+    context={
+        'profile':profile
+    }
+    return render(request,'accounts/profile.html',context)
+
+def edit_profile(request):
+    profile=Profile.objects.get(user=request.user)
+    if request.method=='POST':
+        form=ProfileForm(request.POST,request.FILES,instance=profile)
+        if form.is_valid():
+            form=form.save(commit=False)
+            form.user=request.user
+            form.save()
+            return redirect('/accounts/profile')
+    else:
+        form=ProfileForm(instance=profile)
+    return render(request,'accounts/edit_profile.html',{'form':form})
